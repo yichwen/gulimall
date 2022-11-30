@@ -1,0 +1,98 @@
+server:
+  port: 88
+
+spring:
+  application:
+    name: gulimall-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+    gateway:
+      routes:
+#        - id: google_route
+#          uri: https://www.google.com
+#          predicates:
+#            - Query=url,google
+#        - id: facebook_route
+#          uri: https://www.facebook.com
+#          predicates:
+#            - Query=url,facebook
+
+        - id: thirdparty_route
+          uri: lb://gulimall-thirdparty
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
+
+        - id: product_route
+          uri: lb://gulimall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: coupon_route
+          uri: lb://gulimall-coupon
+          predicates:
+            - Path=/api/coupon/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: member_route
+          uri: lb://gulimall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: ware_route
+          uri: lb://gulimall-ware
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+# 前端项目 /api
+# http://localhost:88/api/captcha.jpg --> http://localhost:8080/renren-fast/captcha.jpg
+
+# nginx代理给网关时，会丢失请求的host的信息
+# 设置 proxy_set_header Host $host
+# **.gulimall.com 转发到 gulimall-product
+        - id: gulimall_host_route
+          uri: lb://gulimall-product
+          predicates:
+            - Host=gulimall.com,item.gulimall.com
+
+        - id: gulimall_search_route
+          uri: lb://gulimall-search
+          predicates:
+            - Host=search.gulimall.com
+
+        - id: gulimall_auth_route
+          uri: lb://gulimall-auth-server
+          predicates:
+            - Host=auth.gulimall.com
+
+        - id: gulimall_cart_route
+          uri: lb://gulimall-cart
+          predicates:
+            - Host=cart.gulimall.com
+
+        - id: gulimall_order_route
+          uri: lb://gulimall-order
+          predicates:
+            - Host=order.gulimall.com
+
+        - id: gulimall_member_route
+          uri: lb://gulimall-member
+          predicates:
+            - Host=member.gulimall.com

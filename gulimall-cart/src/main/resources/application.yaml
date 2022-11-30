@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  application:
+    name: gulimall-cart
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false  # 测试时需要关掉缓存，不然无法获取最新的页面
+  redis:
+    host: 192.168.99.100
+    port: 6379
+
+server:
+  port: 20000
+
+gulimall:
+  thread:
+    core-size: 20
+    max-size: 200
+    keep-alive-time: 10

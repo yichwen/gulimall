@@ -1,0 +1,23 @@
+server:
+  port: 30000
+
+spring:
+  application:
+    name: gulimall-thirdparty
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    alicloud:
+      access-key: xxx
+      secret-key: xxx
+      oss:
+        endpoint: xxx
+        bucket: gulimall-hello
+      sms:
+        host: https://smsmsgs.market.alicloudapi.com
+        path: /sms/
+        skin: 1
+        sign: 1
+        appCode: xxx
+

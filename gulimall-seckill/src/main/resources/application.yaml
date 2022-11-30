@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8333
+  application:
+    name: gulimall-seckill
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+#  rabbitmq:
+#    host: 192.168.99.100
+#    port: 5672
+#    virtual-host: /
+#    listener:
+#      simple:
+#        acknowledge-mode: manual
+
+server:
+  port: 25000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

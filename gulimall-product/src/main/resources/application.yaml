@@ -1,0 +1,52 @@
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.99.100:3306/gulimall_pms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  application:
+    name: gulimall-product
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false  # 测试时需要关掉缓存，不然无法获取最新的页面
+  redis:
+    host: 192.168.99.100
+    port: 6379
+  session:
+    store-type: redis
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000 # ms
+#      key-prefix: CACHE_ # 如果指定了前缀就用我们指定的前缀，如果没有就默认使用缓存的名字作为前缀
+      use-key-prefix: true # 如果是false就不会有前缀
+      cache-null-values: true
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto # 自增主键
+      logic-delete-value: 1 # 逻辑删除 已删除的值
+      logic-not-delete-value: 0 # 逻辑删除 未删除的值
+
+server:
+  port: 10000
+
+gulimall:
+  thread:
+    core-size: 20
+    max-size: 200
+    keep-alive-time: 10
+
+logging:
+  level:
+    io:
+      dao:
+        gulimall:
+          product: debug
